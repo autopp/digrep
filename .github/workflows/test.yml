@@ -30,11 +30,6 @@ jobs:
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
         go mod download
-        go install github.com/onsi/ginkgo/v2/ginkgo@$(go list -f '{{.Version}}' -m github.com/onsi/ginkgo/v2 || echo 'LOOKUP-VERSION-FAILED')
-    - name: Run Test
-      id: unittest
-      run: |
-        make test
     - name: Upload coverage report
       uses: codecov/codecov-action@v2
       with:
