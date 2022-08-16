@@ -10,17 +10,8 @@ Download from [releases page](https://github.com/autopp/digrep/releases).
 ## Usage
 
 ```
-$ digrep spec.yaml
+$ git diff --name-only | digrep
 ```
-
-## Exit Status
-
-| code | description |
-| --- | --- |
-| 0 | All tests are succeeded |
-| 1 | Some tests are failed |
-| 2 | Invalid spec |
-| 3 | Internal error |
 
 ## License
 
