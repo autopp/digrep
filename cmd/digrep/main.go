@@ -14,5 +14,17 @@
 
 package main
 
+import (
+	"os"
+
+	"github.com/autopp/digrep/pkg/cmd"
+)
+
+var version = "HEAD"
+
 func main() {
+	err := cmd.Main(version, os.Stdin, os.Stdout, os.Stderr, os.Args[1:])
+	if err != nil {
+		os.Exit(1)
+	}
 }
