@@ -33,6 +33,13 @@ func Main(version string, stdin io.Reader, stdout, stderr io.Writer, args []stri
 		SilenceErrors: true,
 		SilenceUsage:  true,
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if v, err := cmd.Flags().GetBool(versionFlag); err != nil {
+				return err
+			} else if v {
+				cmd.Println(version)
+				return nil
+			}
+
 			var patterns []string
 			f, err := os.Open(".dockerignore")
 
