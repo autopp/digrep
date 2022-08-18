@@ -1,7 +1,10 @@
 # digrep
 
 ![Github Actions](https://github.com/autopp/digrep/actions/workflows/push-main.yml/badge.svg)
-[![codecov](https://codecov.io/gh/autopp/digrep/branch/main/graph/badge.svg)](https://codecov.io/gh/autopp/digrep)
+
+digrep is filter command by `.dockerignore`.
+
+Like `grep`, `digrep` takes input from standard input and and outputs non filtered line. Unlike `grep`, `digrep` filter by `.dockerignore` (matched lines are OMITTED).
 
 ## Install
 
@@ -9,8 +12,9 @@ Download from [releases page](https://github.com/autopp/digrep/releases).
 
 ## Usage
 
+E.g.
 ```
-$ git diff --name-only | digrep
+$ ls | digrep
 ```
 
 ## License
