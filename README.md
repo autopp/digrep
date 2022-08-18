@@ -12,10 +12,19 @@ Download from [releases page](https://github.com/autopp/digrep/releases).
 
 ## Usage
 
+When no parameter is given, `digrep` reads `.dockerignore` from current directory
+
 E.g.
 ```
-$ ls | digrep
+$ digrep < files.txt
 ```
+
+When parameter is given, `digrep` assumes it is a directory and reads `.dockerignore` from it.
+```
+$ digrep docker < files.txt
+```
+
+When `.dockerignore` is not found, `digrep` outputs all input lines.
 
 ## License
 
