@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 
 	"github.com/docker/docker/pkg/fileutils"
 	"github.com/moby/buildkit/frontend/dockerfile/dockerignore"
@@ -29,9 +30,10 @@ func Main(version string, stdin io.Reader, stdout, stderr io.Writer, args []stri
 	versionFlag := "version"
 
 	cmd := &cobra.Command{
-		Use:           "digrep",
+		Use:           "digrep [DIR]",
 		SilenceErrors: true,
 		SilenceUsage:  true,
+		Args:          cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if v, err := cmd.Flags().GetBool(versionFlag); err != nil {
 				return err
@@ -41,7 +43,12 @@ func Main(version string, stdin io.Reader, stdout, stderr io.Writer, args []stri
 			}
 
 			var patterns []string
-			f, err := os.Open(".dockerignore")
+
+			ignorefile := ".dockerignore"
+			if len(args) > 0 {
+				ignorefile = filepath.Join(args[0], ignorefile)
+			}
+			f, err := os.Open(ignorefile)
 
 			if err == nil {
 				defer f.Close()
