@@ -1,0 +1,44 @@
+tests:
+  - name: without .dockerignore
+    command:
+      - type: env
+        name: DIGREP
+    stdin: |
+      README.md
+      go.mod
+      go.sum
+      LICENSE
+      main.go
+    expect:
+      status:
+        success: true
+      stdout:
+        eq: |
+          README.md
+          go.mod
+          go.sum
+          LICENSE
+          main.go
+      stderr:
+        beEmpty: true
+  - name: with dir contains .dockerignore
+    command:
+      - type: env
+        name: DIGREP
+      - with-dockerignore
+    stdin: |
+      README.md
+      go.mod
+      go.sum
+      LICENSE
+      main.go
+    expect:
+      status:
+        success: true
+      stdout:
+        eq: |
+          go.mod
+          go.sum
+          main.go
+      stderr:
+        beEmpty: true
