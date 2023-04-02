@@ -30,15 +30,13 @@ jobs:
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
         go mod download
-    - name: Upload coverage report
-      uses: codecov/codecov-action@v2
-      with:
-        files: ./coverprofile.out
-        fail_ci_if_error: true
-        verbose: true
-      if: ${{ steps.unittest.conclusion == 'success' || steps.unittest.conclusion == 'failure' }}
     - name: Build
       uses: goreleaser/goreleaser-action@v2
       with:
         version: latest
         args: build --snapshot --rm-dist
+    - name: E2E test
+      run: |
+        wget -q https://github.com/autopp/spexec/releases/latest/download/spexec-linux-amd64.tar.gz
+        tar xf spexec-linux-amd64.tar.gz
+        DIGREP=../dist/digrep_linux_amd64_v1/digrep spexec-linux-amd64/spexec e2e/spexec.yaml
